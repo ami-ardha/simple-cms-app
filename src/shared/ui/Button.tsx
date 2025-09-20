@@ -2,9 +2,8 @@
 
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { clsx, ClassValue } from 'clsx';
+import { clsx } from 'clsx';
 
-// --- Tipe Data dan Props ---
 type ButtonVariant = 'solid' | 'outline' | 'ghost' | 'link';
 type ButtonColor = 'primary' | 'secondary' | 'danger';
 
@@ -15,7 +14,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   className?: string;
 }
 
-// --- Definisi Style untuk Setiap Kombinasi ---
 const styles: Record<ButtonVariant, Record<ButtonColor, string>> = {
   solid: {
     primary: 'bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300',
@@ -53,11 +51,9 @@ const Button = ({
   className,
   ...props
 }: ButtonProps) => {
-  // --- Class Dasar untuk semua tombol ---
   const baseClasses =
     'inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed';
 
-  // Ambil style spesifik dari objek `styles`
   const variantColorClasses = styles[variant][color];
 
   return (

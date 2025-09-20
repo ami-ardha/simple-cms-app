@@ -3,17 +3,6 @@
 import { CMSContext } from '@/context/cmsContext';
 import React, { useState, useEffect, FC, useContext } from 'react';
 
-interface MenuItem {
-  id: string;
-  name: string;
-}
-
-interface MenuGroup {
-  id: string;
-  name: string;
-  menus: MenuItem[];
-}
-
 const SettingsPage: FC = () => {
   const {
     menuGroups,

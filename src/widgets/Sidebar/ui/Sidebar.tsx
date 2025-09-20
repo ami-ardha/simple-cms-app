@@ -1,5 +1,13 @@
-import Link from 'next/link';
+'use client';
+
+import { useRouter, usePathname } from 'next/navigation';
 import { Home, Settings, X } from 'lucide-react';
+import clsx from 'clsx';
+
+const navItems = [
+  { href: '/', label: 'Home', icon: Home },
+  { href: '/settings', label: 'Settings', icon: Settings },
+];
 
 interface SidebarProps {
   isSidebarOpen: boolean;
@@ -7,44 +15,77 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isSidebarOpen, toggleSidebar }: SidebarProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleNavigate = (href: string) => {
+    router.push(href);
+    if (isSidebarOpen) {
+      toggleSidebar();
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent, href: string) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleNavigate(href);
+    }
+  };
+
   return (
     <>
-      <div
-        className={`bg-opacity-50 bg-primary-base fixed inset-0 z-30 md:hidden ${
-          isSidebarOpen ? 'block' : 'hidden'
-        }`}
+      <button
+        aria-label="Close sidebar"
+        className={clsx('bg-opacity-50 fixed inset-0 z-30 bg-black md:hidden', {
+          block: isSidebarOpen,
+          hidden: !isSidebarOpen,
+        })}
         onClick={toggleSidebar}
-      ></div>
+      ></button>
 
       <aside
-        className={`bg-background-dark fixed top-0 left-0 z-40 h-full w-64 transform border-r-2 p-4 transition-transform duration-300 ease-in-out md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={clsx(
+          'bg-neutral-base fixed top-0 left-0 z-40 h-full w-64 transform border-r-2 p-4 transition-transform duration-300 ease-in-out md:relative md:translate-x-0',
+          {
+            'translate-x-0': isSidebarOpen,
+            '-translate-x-full': !isSidebarOpen,
+          }
+        )}
       >
         <div className="mb-10 flex items-center justify-between">
-          <h2 className="text-primary-base text-2xl font-bold">SimpleCMS</h2>
+          <h2 className="text-2xl font-bold">SimpleCMS</h2>
           <button onClick={toggleSidebar} className="text-white md:hidden">
             <X size={24} />
           </button>
         </div>
         <nav>
           <ul>
-            <li>
-              <Link
-                href="/"
-                className="hover:text-primary-base flex items-center border-2 border-transparent p-2 font-semibold hover:bg-white"
-              >
-                <Home className="mr-3" />
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/settings"
-                className="hover:text-primary-base mt-2 flex items-center border-2 border-transparent p-2 font-semibold hover:bg-white"
-              >
-                <Settings className="mr-3" />
-                Settings
-              </Link>
-            </li>
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              const Icon = item.icon;
+
+              return (
+                <li key={item.href} className="mt-2 first:mt-0">
+                  <div
+                    onClick={() => handleNavigate(item.href)}
+                    onKeyDown={(e) => handleKeyDown(e, item.href)}
+                    role="link"
+                    tabIndex={0}
+                    className={clsx(
+                      'flex cursor-pointer items-center rounded-md border-2 p-2 font-semibold transition-colors',
+                      {
+                        'text-neutral-darker bg-secondary-base border-white text-white':
+                          isActive,
+                        'hover:text-neutral-darker hover:bg-secondary-base border-transparent':
+                          !isActive,
+                      }
+                    )}
+                  >
+                    <Icon className="mr-3" />
+                    {item.label}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </aside>
