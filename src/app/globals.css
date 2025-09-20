@@ -1,26 +1,77 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background-lighter: #fcfaf7;
+  --background-light: #f6f3ef;
+  --background-base: #f0ebe3;
+  --background-dark: #e0d8cd;
+  --background-darker: #cac1b7;
+
+  --foreground-lighter: #4a4a4a;
+  --foreground-light: #3a3a3a;
+  --foreground: #2e2e2e;
+  --foreground-dark: #1e1e1e;
+  --foreground-darker: #0f0f0f;
+
+  /* Primary Color Palette (Base: #3A4F41) */
+  --primary-lighter: #839188;
+  --primary-light: #5a6d60;
+  --primary-base: #3a4f41;
+  --primary-dark: #2b3a30;
+  --primary-darker: #1c251f;
+
+  /* Secondary Color Palette (Base: #E87A5D) */
+  --secondary-lighter: #f6beaf;
+  --secondary-light: #ee977f;
+  --secondary-base: #e87a5d;
+  --secondary-dark: #d0684c;
+  --secondary-darker: #b8553a;
 }
 
 @theme inline {
-  --color-background: var(--background);
+  /* Background and Foreground Colors */
+  --color-background-lighter: var(--background-lighter);
+  --color-background-light: var(--background-light);
+  --color-background-base: var(--background-base);
+  --color-background-dark: var(--background-dark);
+  --color-background-darker: var(--background-darker);
+
   --color-foreground: var(--foreground);
+
+  /* Primary Colors */
+  --color-primary-lighter: var(--primary-lighter);
+  --color-primary-light: var(--primary-light);
+  --color-primary-base: var(--primary-base);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-darker: var(--primary-darker);
+
+  /* Secondary Colors */
+  --color-secondary-lighter: var(--secondary-lighter);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-base: var(--secondary-base);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-secondary-darker: var(--secondary-darker);
+
+  /* Font Families */
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background-lighter: #3e3e3e;
+    --background-light: #2e2e2e;
+    --background-base: #2e2e2e;
+    --background-dark: #1e1e1e;
+    --background-darker: #0f0f0f;
+
+    --background-alt: #1e293b;
+    --foreground: #f0ebe3;
   }
 }
 
 body {
-  background: var(--background);
+  background: var(--background-base);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
